@@ -78,7 +78,7 @@ DATABASES = {
         'NAME':'django_viyash',
         'HOST':'localhost',
         'USER':'root',
-        'PASSWORD':'root',
+        'PASSWORD':'',
         'PORT':'3306'
     }
 }
