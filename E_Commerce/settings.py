@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -72,17 +73,31 @@ WSGI_APPLICATION = 'E_Commerce.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+#
+# Choose DB backend via environment variable:
+# - PowerShell: $env:DJANGO_DB = "mysql"  (or "sqlite")
+# - Default: sqlite
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':'django_viyash',
-        'HOST':'localhost',
-        'USER':'root',
-        'PASSWORD':'',
-        'PORT':'3306'
+DJANGO_DB = os.getenv('DJANGO_DB', 'sqlite').strip().lower()
+
+if DJANGO_DB == 'mysql':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'django_viyash',
+            'HOST': 'localhost',
+            'USER': 'root',
+            'PASSWORD': '',
+            'PORT': '3306',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db_local.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -128,3 +143,6 @@ MEDIA_ROOT=BASE_DIR/'static'
 STATICSFILE_DIRS=[
     BASE_DIR/'static'
 ]
+
+# Use BigAutoField by default to avoid auto field warnings
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
