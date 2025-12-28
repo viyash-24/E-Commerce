@@ -1,6 +1,8 @@
 from django.http import  JsonResponse
 from django.shortcuts import render
+from shop.form import CustomUserForm
 from . models import *
+from django.contrib import messages
 import json
 
 def home(request):
