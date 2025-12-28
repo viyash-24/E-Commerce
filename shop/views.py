@@ -5,6 +5,13 @@ def home(request):
           products=Product.objects.filter(trending=1)
           return render(request,"shop/index.html",{"products":products})
 
+def favviewpage(request):
+  if request.user.is_authenticated:
+    fav=Favourite.objects.filter(user=request.user)
+    return render(request,"shop/fav.html",{"fav":fav})
+  else:
+    return redirect("/")
+
 def remove_fav(request,fid):
   item=Favourite.objects.get(id=fid)
   item.delete()
