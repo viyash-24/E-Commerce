@@ -3,6 +3,7 @@ from django.shortcuts import render
 from shop.form import CustomUserForm
 from . models import *
 from django.contrib import messages
+from django.contrib.auth import authenticate,login,logout
 import json
 
 def home(request):
