@@ -1,5 +1,7 @@
+from django.http import  JsonResponse
 from django.shortcuts import render
 from . models import *
+import json
 
 def home(request):
           products=Product.objects.filter(trending=1)
