@@ -5,6 +5,23 @@ def home(request):
           products=Product.objects.filter(trending=1)
           return render(request,"shop/index.html",{"products":products})
 
+def login_page(request):
+  if request.user.is_authenticated:
+    return redirect("/")
+  else:
+    if request.method=='POST':
+      name=request.POST.get('username')
+      pwd=request.POST.get('password')
+      user=authenticate(request,username=name,password=pwd)
+      if user is not None:
+        login(request,user)
+        messages.success(request,"Logged in Successfully")
+        return redirect("/")
+      else:
+        messages.error(request,"Invalid User Name or Password")
+        return redirect("/login")
+    return render(request,"shop/login.html")
+
 def register(request):
           form=CustomUserForm()
           if request.method=='POST':
