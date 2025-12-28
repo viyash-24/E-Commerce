@@ -18,3 +18,11 @@ def register(request):
 def collections(request):
           catagory=Catagory.objects.filter(status=0)
           return render(request,"shop/collections.html",{"catagory":catagory})
+
+def collectionsview(request,name):
+  if(Catagory.objects.filter(name=name,status=0)):
+      products=Product.objects.filter(category__name=name)
+      return render(request,"shop/products/index.html",{"products":products,"category_name":name})
+  else:
+    messages.warning(request,"No Such Catagory Found")
+    return redirect('collections')
