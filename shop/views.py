@@ -5,6 +5,13 @@ def home(request):
           products=Product.objects.filter(trending=1)
           return render(request,"shop/index.html",{"products":products})
 
+def cart_page(request):
+  if request.user.is_authenticated:
+    cart=Cart.objects.filter(user=request.user)
+    return render(request,"shop/cart.html",{"cart":cart})
+  else:
+    return redirect("/")
+
 def remove_cart(request,cid):
   cartitem=Cart.objects.get(id=cid)
   cartitem.delete()
