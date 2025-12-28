@@ -26,3 +26,15 @@ def collectionsview(request,name):
   else:
     messages.warning(request,"No Such Catagory Found")
     return redirect('collections')
+
+def product_details(request,cname,pname):
+    if(Catagory.objects.filter(name=cname,status=0)):
+      if(Product.objects.filter(name=pname,status=0)):
+        products=Product.objects.filter(name=pname,status=0).first()
+        return render(request,"shop/products/product_details.html",{"products":products})
+      else:
+        messages.error(request,"No Such Produtct Found")
+        return redirect('collections')
+    else:
+      messages.error(request,"No Such Catagory Found")
+      return redirect('collections')
