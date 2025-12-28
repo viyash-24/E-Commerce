@@ -5,6 +5,12 @@ def home(request):
           products=Product.objects.filter(trending=1)
           return render(request,"shop/index.html",{"products":products})
 
+def logout_page(request):
+  if request.user.is_authenticated:
+    logout(request)
+    messages.success(request,"Logged out Successfully")
+  return redirect("/")
+
 def login_page(request):
   if request.user.is_authenticated:
     return redirect("/")
